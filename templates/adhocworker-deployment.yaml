@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "redash.adhocWorker.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "redash.name" . }}
+    app.kubernetes.io/component: adhocworker
+    helm.sh/chart: {{ include "redash.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.adhocWorker.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "redash.name" . }}
+      app.kubernetes.io/component: adhocworker
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "redash.name" . }}
+        app.kubernetes.io/component: adhocworker
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ include "redash.name" . }}-adhocworker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/bin/sh"]
+          args: ["-c", ". /config/dynamicenv.sh && /app/bin/docker-entrypoint scheduler"]
+          volumeMounts:
+            - name: config
+              mountPath: /config
+          env:
+            - name: REDASH_DATABASE_URL
+            {{- if not .Values.postgresql.enabled }}
+              value: {{ default "" .Values.externalPostgreSQL | quote }}
+            {{- end }}
+            - name: REDASH_DATABASE_USER
+              value: "{{ .Values.postgresql.postgresqlUsername }}"
+            - name: REDASH_DATABASE_PASSWORD
+            {{- if .Values.postgresql.enabled }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgresql
+                  key: postgresql-password
+            {{- end }}
+            - name: REDASH_DATABASE_HOSTNAME
+              value: {{ include "redash.postgresql.fullname" . }}
+            - name: REDASH_DATABASE_PORT
+              value: "{{ .Values.postgresql.service.port }}"
+            - name: REDASH_DATABASE_DB
+              value: "{{ .Values.postgresql.postgresqlDatabase }}"
+            - name: REDASH_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                {{- if .Values.redis.existingSecret }}
+                  name: {{ .Values.redis.existingSecret }}
+                {{- else }}
+                  name: {{ .Release.Name }}-redis
+                {{- end }}
+                  key: redis-password
+            - name: REDASH_REDIS_HOSTNAME
+              value: {{ include "redash.redis.fullname" . }}
+            - name: REDASH_REDIS_PORT
+              value: "{{ .Values.redis.master.port }}"
+            - name: REDASH_REDIS_DB
+              value: "{{ .Values.redis.databaseNumber }}"
+          {{- range $key, $value := .Values.env }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+          {{- end }}
+          {{- range $key, $value := .Values.adhocWorker.env }}
+            - name: "{{ $key }}"
+              value: "{{ $value }}"
+          {{- end }}
+          resources:
+{{ toYaml .Values.adhocWorker.resources | indent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "redash.fullname" . }}
+    {{- if .Values.adhocWorker.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.adhocWorker.nodeSelector | indent 8 }}
+    {{- end }}
+    {{- with .Values.adhocWorker.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.adhocWorker.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
