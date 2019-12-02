@@ -5,8 +5,10 @@
 ## TL;DR
 
 ```bash
+cd redash-helm
 helm dep up
-helm install stable/redash
+cd ..
+helm install ./redash-helm
 ```
 
 ## Introduction
@@ -24,7 +26,7 @@ This chart bootstraps a [Redash](https://github.com/getredash/redash) deployment
 To install the chart with the release name `my-release`:
 
 ```bash
-$ helm install --name my-release stable/redash
+$ helm install --name my-release ./redash-helm
 ```
 
 The command deploys Redash on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
