@@ -5,7 +5,8 @@
 ## TL;DR
 
 ```bash
-$ helm install stable/redash
+helm dep up
+helm install stable/redash
 ```
 
 ## Introduction
