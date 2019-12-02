@@ -179,7 +179,7 @@ postgresql:
     ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
     ##   GKE, AWS & OpenStack)
     ##
-    storageClass: "microk8s-hostpath"
+    storageClass: ""
     accessMode: ReadWriteOnce
     size: 10Gi
     # existingClaim: ""
