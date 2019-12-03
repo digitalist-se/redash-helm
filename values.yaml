@@ -23,9 +23,11 @@ env:
 ##
 server:
   httpPort: 5000
-
   ## Secure value for session cookie secret - if not set a random value will be generated
-  cookieSecret:
+  #cookieSecret:
+  ## Redash Secret key - if not set a random value will be generated
+  #secretKey:
+
 
   ## Redash server specific envrionment variables
   ## Add any environment variables from https://redash.io/help-onpremise/setup/settings-environment-variables.html
