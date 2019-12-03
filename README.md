@@ -26,7 +26,7 @@ This chart bootstraps a [Redash](https://github.com/getredash/redash) deployment
 To install the chart with the release name `my-release`:
 
 ```bash
-$ helm install --name my-release ./redash-helm
+$ helm install --name my-release .
 ```
 
 The command deploys Redash on the Kubernetes cluster in the default configuration. The [configuration](#configuration) section lists the parameters that can be configured during installation.
@@ -53,6 +53,7 @@ The following table lists the configurable parameters of the Redash chart and th
 | `image.tag`                            | Redash Image tag                                      | `{VERSION}`        |
 | `image.pullPolicy`                     | Image pull policy                                     | `IfNotPresent`     |
 | `image.pullSecrets`                    | Specify docker-ragistry secret names as an array      | `nil`              |
+| `secretKey`                         | Secret used for encryption of data sources             | Randomly generated |
 | `cookieSecret`                         | Secret used for cookie session management             | Randomly generated |
 | `env`                                  | Environment variables from [Redash settings](https://redash.io/help-onpremise/setup/settings-environment-variables.html) and [example Docker Compose](https://github.com/getredash/redash/blob/master/docker-compose.production.yml). Variables applied to both server and worker containers. | `PYTHONUNBUFFERED: 0`<br>`REDASH_LOG_LEVEL: "INFO"` |
 | `server.name`                          | Name used for Redash server deployment                | `redash`           |
