@@ -5,10 +5,10 @@
 ## TL;DR
 
 ```bash
+git clone git@github.com:digitalist-se/redash-helm.git
 cd redash-helm
 helm dep up
-cd ..
-helm install ./redash-helm
+helm install --name=redash .
 ```
 
 ## Introduction
@@ -104,7 +104,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 ```bash
 $ helm install --name my-release \
   --set cookieSecret=verysecret \
-    stable/redash
+    .
 ```
 
 The above command sets the Redash cookie secret to `verysecret`.
@@ -112,6 +112,6 @@ The above command sets the Redash cookie secret to `verysecret`.
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-$ helm install --name my-release -f values.yaml stable/redash
+$ helm install --name my-release -f values.yaml .
 ```
 > **Tip**: You can use the default [values.yaml](values.yaml)

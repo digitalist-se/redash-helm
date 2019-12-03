@@ -159,13 +159,11 @@ postgresql:
   ## To use an external PostgreSQL set this to false and configure the externalPostgreSQL parameter.
   enabled: true
   image:
-    ## Bitnami supported version closest to the one specified in Redash docker-compose.yml
-    ##
     tag: "9.6.16"
   postgresqlUsername: redash
   ## If the password is not specified, a random password will be generated
   ##
-  postgresqlPassword: redash
+  #postgresqlPassword: redash
   postgresqlDatabase: redash
   service:
     type: ClusterIP
@@ -191,7 +189,7 @@ postgresql:
 redis:
   ## If the password is not specified, a random password will be generated
   ##
-  password: redis
+  #password: redis
   databaseNumber: 0
   master:
     port: 6379
