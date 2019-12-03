@@ -18,7 +18,7 @@ This chart bootstraps a [Redash](https://github.com/getredash/redash) deployment
 ## Prerequisites
 
 - At least 3 GB of RAM available on your cluster
-- Kubernetes 1.9+ with Beta APIs enabled
+- Kubernetes 1.16+ (support for earlier version in progress)
 - PV provisioner support in the underlying infrastructure
 
 ## Installing the Chart
