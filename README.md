@@ -2,6 +2,10 @@
 
 [Redash](http://redash.io/) is an open source tool built for teams to query, visualize and collaborate. Redash is quick to setup and works with any data source you might need so you can query from anywhere in no time.
 
+## Kubernetes version
+For Kubernetes v. 1.16+ use master branch, for version 1.15, or possible earlier, use branch 1.15.
+
+
 ## TL;DR
 
 ```bash
@@ -18,7 +22,7 @@ This chart bootstraps a [Redash](https://github.com/getredash/redash) deployment
 ## Prerequisites
 
 - At least 3 GB of RAM available on your cluster
-- Kubernetes 1.16+ (support for earlier version in progress)
+- Kubernetes 1.16+ (for earlier version, use branch 1.15, that could possible work with earlier versions also)
 - PV provisioner support in the underlying infrastructure
 
 ## Installing the Chart
