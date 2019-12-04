@@ -32,6 +32,10 @@ spec:
             - name: config
               mountPath: /config
           env:
+            - name: QUEUES
+              value: "scheduled_queries,schemas"
+            - name: WORKERS_COUNT
+              value: 1  
             - name: REDASH_SECRET_KEY
               valueFrom:
                 secretKeyRef:
