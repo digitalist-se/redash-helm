@@ -27,15 +27,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["/bin/sh"]
-          args: ["-c", ". /config/dynamicenv.sh && /app/bin/docker-entrypoint scheduler"]
+          args: ["-c", ". /config/dynamicenv.sh && /app/bin/docker-entrypoint worker"]
           volumeMounts:
             - name: config
               mountPath: /config
           env:
-            - name: QUEUES
-              value: "queries"
-            - name: WORKERS_COUNT
-              value: 2
             - name: REDASH_SECRET_KEY
               valueFrom:
                 secretKeyRef:
