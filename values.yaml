@@ -87,7 +87,7 @@ adhocWorker:
   ## Add any environment variables from https://redash.io/help-onpremise/setup/settings-environment-variables.html
   ##
   env:
-    QUEUES: "queries,celery"
+    QUEUES: "queries"
     WORKERS_COUNT: 2
 
   replicaCount: 1
@@ -119,8 +119,40 @@ scheduledWorker:
   ## Add any environment variables from https://redash.io/help-onpremise/setup/settings-environment-variables.html
   ##
   env:
-    QUEUES: "scheduled_queries"
-    WORKERS_COUNT: 2
+    QUEUES: "scheduled_queries,schemas"
+    WORKERS_COUNT: 1
+
+  replicaCount: 1
+
+  ## Scheduled worker resource requests and limits
+  ## Ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  resources: {}
+
+  ## Node labels for scheduled worker pod assignment
+  ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
+  ##
+  nodeSelector: {}
+
+  ## Tolerations for scheduled worker pod assignment
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  ##
+  tolerations: []
+
+  ## Affinity for scheduled worker pod assignment
+  ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  ##
+  affinity: {}
+
+## Configuration for Redash scheduled workers
+##
+scheduler:
+  ## Scheduler worker specific environment variables
+  ## Add any environment variables from https://redash.io/help-onpremise/setup/settings-environment-variables.html
+  ##
+  env:
+    QUEUES: "celery"
+    WORKERS_COUNT: 1
 
   replicaCount: 1
 
