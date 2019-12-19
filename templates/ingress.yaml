@@ -5,6 +5,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: {{ $fullName }}
+  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: {{ include "redash.name" . }}
     helm.sh/chart: {{ include "redash.chart" . }}

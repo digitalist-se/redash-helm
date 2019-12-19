@@ -3,6 +3,7 @@
 
 ## Image used for server and worker pods
 ##
+namespace: redash
 image:
   repository: redash/redash
   tag: 8.0.0.b32245

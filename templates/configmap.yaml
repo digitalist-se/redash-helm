@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "redash.fullname" . }}
+  name: {{ template "redash.fullname" . }}
+  namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/name: {{ include "redash.name" . }}
-    helm.sh/chart: {{ include "redash.chart" . }}
-    app.kubernetes.io/instance: "{{ .Release.Name }}"
-    app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    heritage: {{ .Release.Service | quote }}
+    release: {{ .Release.Name | quote }}
+    chart: {{ template "redash.chart" . }}
+    app: {{ template "redash.fullname" . }}
 data:
   createdb.sh: |
     #!/usr/bin/env bash
